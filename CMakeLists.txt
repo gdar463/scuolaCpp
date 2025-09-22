@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 add_compile_options(-g3 -Wall -Wextra -Wconversion -Wdouble-promotion
      -Wno-unused-parameter -Wno-unused-function -Wno-sign-conversion
-     -fsanitize=undefined -fsanitize-trap)
+     -fsanitize=undefined -fsanitize-trap -DUSING_CMAKE)
 
 project(Scuola VERSION 0.1)
 
