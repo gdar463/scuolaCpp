@@ -9,4 +9,4 @@ add_compile_options(-g3 -Wall -Wextra -Wconversion -Wdouble-promotion
 
 project(Scuola VERSION 0.1)
 
-add_executable(Pointers Pointers/main.cpp Pointers/swap.cpp Pointers/fill.cpp Pointers/clamp.cpp)
+add_executable(Pointers_09-16 Pointers_09-16/main.cpp Pointers_09-16/swap.cpp Pointers_09-16/fill.cpp Pointers_09-16/clamp.cpp)
