@@ -9,4 +9,6 @@ add_compile_options(-g3 -Wall -Wextra -Wconversion -Wdouble-promotion
 
 project(Scuola VERSION 0.1)
 
-add_executable(Pointers_09-16 Pointers_09-16/main.cpp Pointers_09-16/swap.cpp Pointers_09-16/fill.cpp Pointers_09-16/clamp.cpp)
+file(GLOB Pointers_09-16_SRC CONFIGURE_DEPENDS "Pointers_09-16/*.hpp" "Pointers_09-16/*.cpp")
+
+add_executable(Pointers_09-16 ${Pointers_09-16_SRC})
