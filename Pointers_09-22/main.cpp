@@ -1,6 +1,6 @@
-#include "fill/main.cpp"
-#include "print/main.cpp"
-#include "swap/main.cpp"
+#include "fill/fill.cpp"
+#include "print/print.cpp"
+#include "swap/swap.cpp"
 #include <iostream>
 
 int main() {

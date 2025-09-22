@@ -4,7 +4,7 @@
 namespace Print {
 #endif
 
-int main() { return 1; }
+int main() { return 1;}
 
 #ifdef USING_CMAKE
 }
