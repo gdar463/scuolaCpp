@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstddef>
 #include <iostream>
 
@@ -53,7 +54,7 @@ int cstr_cmp(const char *a, const char *b) {
     if (*b == '\x0')
       return -1;
     if (*(a + i) != *(b + i))
-      return 1;
+      return *(a + i) > *(b + i) ? 1 : -1;
   }
   int size_b = cstr_len(b);
   if (size_b > i) {
@@ -65,14 +66,27 @@ int cstr_cmp(const char *a, const char *b) {
 void cstr_remove_char(char *s, char ch) {
   if (s == nullptr)
     return;
+
+  size_t len{cstr_len(s)};
+  char *found{std::find(s, s + len, ch)};
+  int i{0};
+
+  while (*found != '\x0') {
+    if (*found == ch) {
+      for (char *c = found - i; c != s + len; ++c) {
+        *c = *(c + 1);
+      }
+    }
+    found = std::find(found, s + len, ch);
+  }
 }
 
 int main() {
-  const char s[]{"stuff"};
+  const char len_s[]{"stuff"};
 
   std::cout << "cstr_len(s)" << std::endl;
-  std::cout << "s: " << s << std::endl;
-  std::cout << "out: " << cstr_len(s) << "\n\n";
+  std::cout << "s: " << len_s << std::endl;
+  std::cout << "out: " << cstr_len(len_s) << "\n\n";
 
   size_t copy_cap = 10;
   char *copy_dst{new char[copy_cap]};
@@ -101,12 +115,20 @@ int main() {
   std::cout << "dst: " << cat_dst << "\n\n";
 
   const char a[]{"orange"};
-  const char b[]{"oranes"};
+  const char b[]{"apple"};
 
-  // se a è quello diverso, ritorna lo stesso 1
-  // TODO: da sistemare
   std::cout << "cstr_cmp(a, b)" << std::endl;
   std::cout << "a: " << a << std::endl;
   std::cout << "b: " << b << std::endl;
   std::cout << "out: " << cstr_cmp(a, b) << "\n\n";
+
+  char *rm_s{new char[]{"sasso rosso"}};
+  const char ch{'s'};
+
+  std::cout << "cstr_remove_char(s, ch)" << std::endl;
+  std::cout << "s: " << rm_s << std::endl;
+  std::cout << "ch: " << ch << std::endl;
+  cstr_remove_char(rm_s, ch);
+  std::cout << "out: <void>" << std::endl;
+  std::cout << "s: " << rm_s << std::endl;
 }
