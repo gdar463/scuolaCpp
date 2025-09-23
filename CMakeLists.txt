@@ -11,4 +11,6 @@ file(GLOB Pointers_09-16_SRC CONFIGURE_DEPENDS "Pointers_09-16/*.hpp" "Pointers_
 file(GLOB Pointers_09-22_SRC CONFIGURE_DEPENDS "Pointers_09-22/*.hpp" "Pointers_09-22/*.cpp")
 file(GLOB Pointers_09-23_SRC CONFIGURE_DEPENDS "Pointers_09-23/*.hpp" "Pointers_09-23/*.cpp")
 
+add_executable(Pointers_09-16 ${Pointers_09-16_SRC})
+add_executable(Pointers_09-22 ${Pointers_09-22_SRC})
 add_executable(Pointers_09-23 ${Pointers_09-23_SRC})
