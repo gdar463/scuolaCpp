@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <cstddef>
 #include <iostream>
 
@@ -63,21 +62,22 @@ int cstr_cmp(const char *a, const char *b) {
   return 0;
 }
 
+// Versione precedente usava find per cercare il carattere
 void cstr_remove_char(char *s, char ch) {
   if (s == nullptr)
     return;
 
   size_t len{cstr_len(s)};
-  char *found{std::find(s, s + len, ch)};
-  int i{0};
+  char *c{s};
 
-  while (*found != '\x0') {
-    if (*found == ch) {
-      for (char *c = found - i; c != s + len; ++c) {
-        *c = *(c + 1);
+  while (*c != '\x0') {
+    if (*c == ch) {
+      for (char *d = c; d != s + len; ++d) {
+        *d = *(d + 1);
       }
+    } else {
+      ++c;
     }
-    found = std::find(found, s + len, ch);
   }
 }
 
