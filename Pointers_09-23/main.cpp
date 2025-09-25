@@ -34,7 +34,7 @@ bool cstr_cat(char *dst, size_t cap, const char *src) {
   size_t src_len{cstr_len(src)};
   size_t dst_len{cstr_len(dst)};
   size_t len{src_len + dst_len};
-  if (len > cap)
+  if (len + 1 > cap) // fix dopo visto soluzioni
     return false;
 
   for (int i = dst_len; i < len; i++) {
