@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -33,6 +34,25 @@ struct Student {
     }
     marks = nullptr;
     n = 0;
+  }
+  Student(char *_name, int *_marks, size_t _n) {
+    if (*_name == '\x0') {
+      name = new char[]{""};
+    } else {
+      name = new char[cstr_len(_name)];
+      cstr_copy(_name, name);
+    }
+
+    if (_marks == nullptr || _n == 0) {
+      marks = nullptr;
+      n = 0;
+    } else {
+      marks = new int[_n];
+      for (int i = 0; i < _n; i++) {
+        marks[i] = _marks[i];
+      }
+      n = _n;
+    }
   }
 };
 
@@ -97,10 +117,8 @@ void deleteStudent(Student *s) {
   delete s;
 }
 
-int main() {
+void testNewStudent(Student *s) {
   std::srand(time(NULL));
-  char name[] = "Josh";
-  Student *s = new Student(name);
 
   std::cout << "name: " << s->name << "\n\n";
 
@@ -119,5 +137,19 @@ int main() {
 
   print(s);
   deleteStudent(s);
+}
+
+int main() {
+  char name_alice[] = "Alice";
+  const size_t n_alice = 3;
+  int marks_alice[n_alice] = {10, 6, 7};
+  Student *s_alice = new Student(name_alice, marks_alice, n_alice);
+  std::cout << "Alice" << std::endl;
+  testNewStudent(s_alice);
+
+  char name_bob[] = "Bob";
+  Student *s_bob = new Student(name_bob);
+  std::cout << "\nBob" << std::endl;
+  testNewStudent(s_bob);
   return 0;
 }
