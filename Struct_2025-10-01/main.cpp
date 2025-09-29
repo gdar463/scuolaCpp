@@ -111,27 +111,15 @@ void deleteStudent(Student *s) {
 int main() {
   char name[] = "Alice";
   const size_t n = 4;
-  // aggiunto 14 per testare il check del fuori intervallo nel costruttore
-  int marks[n] = {10, 6, 7, 14};
+  int marks[n] = {10, 6, 7, 14}; // aggiunto 14 per testare il check del fuori
+                                 // intervallo nel costruttore
   Student *s = new Student(name, marks, n);
 
   std::srand(time(NULL));
-
-  std::cout << "name: " << s->name << "\n\n";
-
   for (int i = 0; i < 10; i++) {
     int mark = rand() % 15; // modulo 15 per testare anche oltre al 10
-    std::cout << "mark: " << mark
-              << " result: " << (addMark(s, mark) ? "true" : "false")
-              << std::endl;
+    addMark(s, mark);
   }
-  std::cout << std::endl;
-
-  std::cout << "n: " << s->n << "\n\n";
-  for (int i = 0; i < s->n; i++) {
-    std::cout << "i: " << i << " mark: " << s->marks[i] << std::endl;
-  }
-  std::cout << std::endl;
 
   print(s);
   deleteStudent(s);
