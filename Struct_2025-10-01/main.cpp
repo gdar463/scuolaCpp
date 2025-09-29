@@ -48,10 +48,14 @@ struct Student {
       n = 0;
     } else {
       marks = new int[_n];
+      n = _n;
       for (int i = 0; i < _n; i++) {
+        if (_marks[i] < 3 || _marks[i] > 10) {
+          n--;
+          continue;
+        }
         marks[i] = _marks[i];
       }
-      n = _n;
     }
   }
 };
@@ -141,8 +145,8 @@ void testNewStudent(Student *s) {
 
 int main() {
   char name_alice[] = "Alice";
-  const size_t n_alice = 3;
-  int marks_alice[n_alice] = {10, 6, 7};
+  const size_t n_alice = 4;
+  int marks_alice[n_alice] = {10, 6, 7, 14};
   Student *s_alice = new Student(name_alice, marks_alice, n_alice);
   std::cout << "Alice" << std::endl;
   testNewStudent(s_alice);
