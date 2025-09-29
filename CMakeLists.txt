@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.18)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-add_compile_options(-Wall -g -DUSING_CMAKE)
+add_compile_options(-Wall -g -DUSING_CMAKE -O0)
 
 project(Scuola VERSION 0.1)
 
