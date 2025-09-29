@@ -103,8 +103,8 @@ void print(Student *s) {
 }
 
 void deleteStudent(Student *s) {
-  delete s->name;
-  delete s->marks;
+  delete[] s->name;
+  delete[] s->marks;
   s->name = nullptr;
   s->marks = nullptr;
   s->n = 0;
