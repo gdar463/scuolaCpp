@@ -63,6 +63,8 @@ if not dry_run:
     os.makedirs(project)
     with open(project + "/main.cpp", "wt") as f:
         f.write(cppFile)
+
+    os.system("cd build; cmake ..")
 else:
     print("-- Bash File: \"scripts/" + project + ".sh\"\n")
     print("```")
