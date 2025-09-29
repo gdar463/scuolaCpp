@@ -56,6 +56,7 @@ if not dry_run:
                 break
         cmake.insert(fileLine, "file(GLOB " + project + "_SRC CONFIGURE_DEPENDS \"" + project + "/*.hpp\" \"" + project + "/*.cpp\")\n")
         cmake.append("add_executable(" + project + " ${" + project + "_SRC})\n")
+        cmake.append("set_target_properties(" + project + " PROPERTIES OUTPUT_NAME \"" + project + "\")\n")
         f.seek(0)
         f.writelines(cmake)
         f.truncate()

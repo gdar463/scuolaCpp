@@ -13,6 +13,10 @@ file(GLOB Pointers_09-23_SRC CONFIGURE_DEPENDS "Pointers_09-23/*.hpp" "Pointers_
 file(GLOB Struct_2025-10-01_SRC CONFIGURE_DEPENDS "Struct_2025-10-01/*.hpp" "Struct_2025-10-01/*.cpp")
 
 add_executable(Pointers_09-16 ${Pointers_09-16_SRC})
+set_target_properties(Pointers_09-16 PROPERTIES OUTPUT_NAME "pointers_09-16")
 add_executable(Pointers_09-22 ${Pointers_09-22_SRC})
+set_target_properties(Pointers_09-22 PROPERTIES OUTPUT_NAME "pointers_09-22")
 add_executable(Pointers_09-23 ${Pointers_09-23_SRC})
+set_target_properties(Pointers_09-16 PROPERTIES OUTPUT_NAME "pointers_09-23")
 add_executable(Struct_2025-10-01 ${Struct_2025-10-01_SRC})
+set_target_properties(Struct_2025-10-01 PROPERTIES OUTPUT_NAME "struct_2025-10-01")

@@ -2,7 +2,6 @@
 
 cmake --build build -t {{projectName}}
 if [ $? -eq 0 ]; then
-    mv build/{{projectName}} build/{{projectFile}}
     if [[ "${PWD}" != "/home/dario/projects/cpp/scuola/{{projectName}}/" ]]; then
         cd {{projectName}}
     fi

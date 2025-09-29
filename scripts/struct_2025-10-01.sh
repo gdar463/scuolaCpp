@@ -2,7 +2,6 @@
 
 cmake --build build -t Struct_2025-10-01
 if [ $? -eq 0 ]; then
-    mv build/Struct_2025-10-01 build/struct_2025-10-01
     if [[ "${PWD}" != "/home/dario/projects/cpp/scuola/Struct_2025-10-01/" ]]; then
         cd Struct_2025-10-01
     fi
