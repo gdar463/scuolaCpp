@@ -25,17 +25,8 @@ struct Student {
   char *name;
   int *marks;
   size_t n;
-  Student(char *_name) {
-    if (*_name == '\x0') {
-      name = new char[]{""};
-    } else {
-      name = new char[cstr_len(_name)];
-      cstr_copy(_name, name);
-    }
-    marks = nullptr;
-    n = 0;
-  }
-  Student(char *_name, int *_marks, size_t _n) {
+
+  Student(char *_name, int *_marks = nullptr, size_t _n = 0) {
     if (*_name == '\x0') {
       name = new char[]{""};
     } else {
@@ -65,8 +56,7 @@ bool addMark(Student *s, int mark) {
     return false;
   if (s == nullptr)
     return false;
-
-  if (s->marks == nullptr) {
+  if (s->marks == nullptr || s->n == 0) {
     s->marks = new int[1]{mark};
     s->n++;
     return true;
@@ -82,7 +72,7 @@ bool addMark(Student *s, int mark) {
   return true;
 }
 
-double calcMedia(Student *s) {
+double avgMarks(Student *s) {
   if (s == nullptr)
     return 0;
   if (s->marks == nullptr)
@@ -97,7 +87,6 @@ double calcMedia(Student *s) {
   return out / s->n;
 }
 
-// Name: V1 V2 .., Media:
 void print(Student *s) {
   if (s == nullptr)
     return;
@@ -106,11 +95,9 @@ void print(Student *s) {
   if (s->n != 0) {
     std::cout << ": ";
     for (int i = 0; i < s->n; i++) {
-      std::cout << s->marks[i];
-      if (i != s->n - 1)
-        std::cout << " ";
+      std::cout << s->marks[i] << " ";
     }
-    std::cout << ", Media: " << calcMedia(s);
+    std::cout << "| media = " << avgMarks(s);
   }
   std::cout << std::endl;
 }
@@ -121,19 +108,26 @@ void deleteStudent(Student *s) {
   delete s;
 }
 
-void testNewStudent(Student *s) {
+int main() {
+  char name[] = "Alice";
+  const size_t n = 4;
+  // aggiunto 14 per testare il check del fuori intervallo nel costruttore
+  int marks[n] = {10, 6, 7, 14};
+  Student *s = new Student(name, marks, n);
+
   std::srand(time(NULL));
 
   std::cout << "name: " << s->name << "\n\n";
 
   for (int i = 0; i < 10; i++) {
-    int mark = rand() % 15;
+    int mark = rand() % 15; // modulo 15 per testare anche oltre al 10
     std::cout << "mark: " << mark
               << " result: " << (addMark(s, mark) ? "true" : "false")
               << std::endl;
   }
+  std::cout << std::endl;
 
-  std::cout << "\nn: " << s->n << "\n\n";
+  std::cout << "n: " << s->n << "\n\n";
   for (int i = 0; i < s->n; i++) {
     std::cout << "i: " << i << " mark: " << s->marks[i] << std::endl;
   }
@@ -141,19 +135,5 @@ void testNewStudent(Student *s) {
 
   print(s);
   deleteStudent(s);
-}
-
-int main() {
-  char name_alice[] = "Alice";
-  const size_t n_alice = 4;
-  int marks_alice[n_alice] = {10, 6, 7, 14};
-  Student *s_alice = new Student(name_alice, marks_alice, n_alice);
-  std::cout << "Alice" << std::endl;
-  testNewStudent(s_alice);
-
-  char name_bob[] = "Bob";
-  Student *s_bob = new Student(name_bob);
-  std::cout << "\nBob" << std::endl;
-  testNewStudent(s_bob);
   return 0;
 }
