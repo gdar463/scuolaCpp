@@ -21,6 +21,9 @@ void cstr_copy(char *src, char *dst) {
   }
 }
 
+// usata sia per inizializzare marks che per aumento size a momento di realloc
+static const size_t UNIT_MARKS_N = 10;
+
 struct Student {
   char *name;
   int *marks;
@@ -35,11 +38,14 @@ struct Student {
     }
 
     if (_marks == nullptr || _n == 0) {
-      marks = nullptr;
-      n = 0;
+      marks = new int[UNIT_MARKS_N];
+      n = UNIT_MARKS_N;
+      for (int i = 0; i < n; i++) {
+        marks[i] = 0;
+      }
     } else {
-      marks = new int[_n];
-      n = _n;
+      n = _n > UNIT_MARKS_N ? _n : UNIT_MARKS_N;
+      marks = new int[n];
       for (int i = 0; i < _n; i++) {
         if (_marks[i] < 3 || _marks[i] > 10) {
           n--;
@@ -56,20 +62,28 @@ bool addMark(Student *s, int mark) {
     return false;
   if (s == nullptr)
     return false;
-  if (s->marks == nullptr || s->n == 0) {
-    s->marks = new int[1]{mark};
-    s->n++;
-    return true;
-  }
 
-  int *temp = new int[s->n + 1];
-  for (int i = 0; i < s->n; i++) {
-    temp[i] = s->marks[i];
+  int *val = s->marks;
+  while (true) {
+    if (val == s->marks + s->n) {
+      int *temp = new int[s->n + UNIT_MARKS_N];
+      for (int i = 0; i < s->n; i++) {
+        temp[i] = s->marks[i];
+      }
+      temp[s->n] = mark;
+      delete[] s->marks;
+      s->marks = temp;
+      s->n += UNIT_MARKS_N;
+      return true;
+    }
+
+    if (*val == 0) {
+      *val = mark;
+      return true;
+    }
+
+    ++val;
   }
-  temp[s->n] = mark;
-  s->marks = temp;
-  s->n++;
-  return true;
 }
 
 double avgMarks(Student *s) {
@@ -81,10 +95,13 @@ double avgMarks(Student *s) {
     return 0;
 
   double out = 0;
+  int n_voti = 0; // media solo di voti non 0
   for (int i = 0; i < s->n; i++) {
+    if (s->marks[i] != 0)
+      n_voti++;
     out += s->marks[i];
   }
-  return out / s->n;
+  return out / n_voti;
 }
 
 void print(Student *s) {
@@ -118,7 +135,7 @@ int main() {
   Student *s = new Student(name, marks, n);
 
   std::srand(time(NULL));
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 15; i++) {
     int mark = rand() % 15; // modulo 15 per testare anche oltre al 10
     addMark(s, mark);
   }
