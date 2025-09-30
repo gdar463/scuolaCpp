@@ -101,13 +101,12 @@ double avgMarks(Student *s) {
     return 0;
 
   double out = 0;
-  int n_voti = 0; // media solo di voti non 0
   for (int i = 0; i < s->n; i++) {
-    if (s->marks[i] != 0)
-      n_voti++;
+    if (s->marks[i] == 0)
+      return out / i;
     out += s->marks[i];
   }
-  return out / n_voti;
+  return out / s->n;
 }
 
 void print(Student *s) {
