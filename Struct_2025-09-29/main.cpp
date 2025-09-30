@@ -3,6 +3,15 @@
 #include <ctime>
 #include <iostream>
 
+namespace Config {
+
+static const size_t UNIT_MARKS_N = 10; // usata sia per inizializzare marks che
+                                       // per aumento size a momento di realloc
+static const int MIN_MARK = 3;
+static const int MAX_MARK = 10;
+
+} // namespace Config
+
 int cstr_len(char *str) {
   char *p = str;
   while (true) {
@@ -21,9 +30,6 @@ void cstr_copy(char *src, char *dst) {
   }
 }
 
-// usata sia per inizializzare marks che per aumento size a momento di realloc
-static const size_t UNIT_MARKS_N = 10;
-
 struct Student {
   char *name;
   int *marks;
@@ -38,16 +44,16 @@ struct Student {
     }
 
     if (_marks == nullptr || _n == 0) {
-      marks = new int[UNIT_MARKS_N];
-      n = UNIT_MARKS_N;
+      marks = new int[Config::UNIT_MARKS_N];
+      n = Config::UNIT_MARKS_N;
       for (int i = 0; i < n; i++) {
         marks[i] = 0;
       }
     } else {
-      n = _n > UNIT_MARKS_N ? _n : UNIT_MARKS_N;
+      n = _n > Config::UNIT_MARKS_N ? _n : Config::UNIT_MARKS_N;
       marks = new int[n];
       for (int i = 0; i < _n; i++) {
-        if (_marks[i] < 3 || _marks[i] > 10) {
+        if (_marks[i] < Config::MIN_MARK || _marks[i] > Config::MAX_MARK) {
           n--;
           continue;
         }
@@ -58,7 +64,7 @@ struct Student {
 };
 
 bool addMark(Student *s, int mark) {
-  if (mark < 3 || mark > 10)
+  if (mark < Config::MIN_MARK || mark > Config::MAX_MARK)
     return false;
   if (s == nullptr)
     return false;
@@ -66,14 +72,14 @@ bool addMark(Student *s, int mark) {
   int *val = s->marks;
   while (true) {
     if (val == s->marks + s->n) {
-      int *temp = new int[s->n + UNIT_MARKS_N];
+      int *temp = new int[s->n + Config::UNIT_MARKS_N];
       for (int i = 0; i < s->n; i++) {
         temp[i] = s->marks[i];
       }
       temp[s->n] = mark;
       delete[] s->marks;
       s->marks = temp;
-      s->n += UNIT_MARKS_N;
+      s->n += Config::UNIT_MARKS_N;
       return true;
     }
 
